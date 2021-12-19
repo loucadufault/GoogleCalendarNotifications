@@ -1,0 +1,6 @@
+# Node
+/node_modules/
+
+# Coda
+.coda.json
+.coda-credentials.json
