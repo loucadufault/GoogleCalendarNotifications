@@ -115,7 +115,7 @@ pack.addFormula({
   resultType: coda.ValueType.String,
 
   execute: async function ([event, calendar = "primary", ...varargs], context) {
-    return setNotifications([event, calendar = "primary", ...varargs], context);
+    return setNotifications([event, calendar, varargs], context);
   },
 });
 
@@ -152,6 +152,6 @@ pack.addFormula({
   resultType: coda.ValueType.String,
 
   execute: async function ([event, calendar = "primary", restoreDefault = false], context) {
-    return clearNotifications([event, calendar = "primary", restoreDefault = false], context);
+    return clearNotifications([event, calendar, restoreDefault], context);
   },
 });
