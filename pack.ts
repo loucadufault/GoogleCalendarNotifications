@@ -19,24 +19,28 @@ pack.setUserAuthentication({
 
 pack.addNetworkDomain(GOOGLEAPIS_DOMAIN);
 
+const calendarParam = coda.makeParameter({
+  type: coda.ParameterType.String,
+  name: "calendar",
+  description: "The URL, ID, or name of the calendar to use.",
+  optional: true,
+  defaultValue: "primary"
+});
+
+const eventParam = coda.makeParameter({
+  type: coda.ParameterType.String,
+  name: "event",
+  description: "The URL or ID of an event."
+});
+
 // read whether the reminders of an event are the default ones
 pack.addFormula({
   name: "IsDefaultNotifications",
   description: "Returns whether the notifications set on the given Google Calendar event are the default notification(s) of the calendar.",
 
   parameters: [
-    coda.makeParameter({
-      type: coda.ParameterType.String,
-      name: "event",
-      description: "The URL or ID of an event."
-    }),
-    coda.makeParameter({
-      type: coda.ParameterType.String,
-      name: "calendar",
-      description: "The URL, ID, or name of the calendar to use.",
-      optional: true,
-      defaultValue: "primary"
-    }),
+    eventParam,
+    calendarParam,
   ],
 
   resultType: coda.ValueType.Boolean,
@@ -52,18 +56,8 @@ pack.addFormula({
   description: "Returns the notifications set on the given Google Calendar event.",
 
   parameters: [
-    coda.makeParameter({
-      type: coda.ParameterType.String,
-      name: "event",
-      description: "The URL or ID of an event."
-    }),
-    coda.makeParameter({
-      type: coda.ParameterType.String,
-      name: "calendar",
-      description: "The URL, ID, or name of the calendar to use.",
-      optional: true,
-      defaultValue: "primary"
-    }),
+    eventParam,
+    calendarParam,
   ],
 
   resultType: coda.ValueType.Array,
@@ -83,18 +77,8 @@ pack.addFormula({
   isAction: true,
 
   parameters: [
-    coda.makeParameter({
-      type: coda.ParameterType.String,
-      name: "event",
-      description: "The URL or ID of an event."
-    }),
-    coda.makeParameter({
-      type: coda.ParameterType.String,
-      name: "calendar",
-      description: "The URL, ID, or name of the calendar to use.",
-      optional: true,
-      defaultValue: "primary",
-    }),
+    eventParam,
+    calendarParam,
   ],
   varargParameters: [
     coda.makeParameter({
@@ -128,18 +112,8 @@ pack.addFormula({
   isAction: true,
 
   parameters: [
-    coda.makeParameter({
-      type: coda.ParameterType.String,
-      name: "event",
-      description: "The URL or ID of an event."
-    }),
-    coda.makeParameter({
-      type: coda.ParameterType.String,
-      name: "calendar",
-      description: "The URL, ID, or name of the calendar to use.",
-      optional: true,
-      defaultValue: "primary"
-    }),
+    eventParam,
+    calendarParam,
     coda.makeParameter({
       type: coda.ParameterType.Boolean,
       name: "restoreDefault",
