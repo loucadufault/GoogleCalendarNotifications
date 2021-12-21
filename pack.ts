@@ -1,6 +1,6 @@
 import * as coda from "@codahq/packs-sdk";
 
-import { clearNotifications, isDefaultNotifications, notifications, setNotifications } from "./controllers/controllers";
+import { clearNotifications, isDefaultNotifications, notifications, setNotifications } from "./controller/controller";
 import { reminderSchema } from "./schemas";
 import { GOOGLEAPIS_DOMAIN } from "./utils/constants.helpers";
 
