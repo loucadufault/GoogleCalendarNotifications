@@ -4,7 +4,9 @@ import { clearNotifications, isDefaultNotifications, notifications, setNotificat
 import { reminderSchema } from "./schemas";
 import { GOOGLEAPIS_DOMAIN } from "./utils/constants.helpers";
 
+
 export const pack = coda.newPack();
+
 
 // per-user authentication
 pack.setUserAuthentication({
@@ -17,7 +19,9 @@ pack.setUserAuthentication({
   ]
 });
 
+
 pack.addNetworkDomain(GOOGLEAPIS_DOMAIN);
+
 
 const calendarParam = coda.makeParameter({
   type: coda.ParameterType.String,
@@ -32,6 +36,7 @@ const eventParam = coda.makeParameter({
   name: "event",
   description: "The URL or ID of an event."
 });
+
 
 // read whether the reminders of an event are the default ones
 pack.addFormula({
@@ -68,7 +73,6 @@ pack.addFormula({
   },
 });
 
-
 // set the reminders of an event
 pack.addFormula({
   name: "SetNotifications",
@@ -103,7 +107,6 @@ pack.addFormula({
   },
 });
 
-
 // delete all overrride reminders of an event
 pack.addFormula({
   name: "ClearNotifications",
@@ -117,7 +120,7 @@ pack.addFormula({
     coda.makeParameter({
       type: coda.ParameterType.Boolean,
       name: "restoreDefault",
-      description: "Whether to restore the default notification(s) of the calendar on the event. Default is `False()`.",
+      description: "Whether to restore the default notification(s) of the calendar on the event. The default is False.",
       optional: true,
       defaultValue: false
     })

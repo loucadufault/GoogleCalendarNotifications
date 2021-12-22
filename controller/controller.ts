@@ -3,9 +3,10 @@ import * as coda from "@codahq/packs-sdk";
 import { getEvent, updateEventReminders } from "../service/events.service";
 import { getCalendarEntry } from "../service/calendarList.service";
 
-const isDefaultNotifications = async function ([event, calendar], context) {
+
+const isDefaultNotifications = async function ([event, calendar], context: coda.ExecutionContext) {
   try {
-    const eventResponse = await getEvent(event, calendar)(context);
+    const eventResponse = await getEvent(event, calendar)(context.fetcher);
     const reminders = eventResponse.body.reminders;
     return reminders.useDefault;
   } catch (error) {
@@ -23,14 +24,13 @@ const isDefaultNotifications = async function ([event, calendar], context) {
   }
 }
 
-
-const notifications = async function([event, calendar = "primary"], context) {
+const notifications = async function([event, calendar = "primary"], context: coda.ExecutionContext) {
   try {
-    const eventResponse = await getEvent(event, calendar)(context); 
+    const eventResponse = await getEvent(event, calendar)(context.fetcher); 
     const reminders = eventResponse.body.reminders;
 
     if (reminders.useDefault) {
-      const calendarEntry = (await getCalendarEntry(calendar)(context)).body;
+      const calendarEntry = (await getCalendarEntry(calendar)(context.fetcher)).body;
       return calendarEntry.defaultReminders;
     }
 
@@ -50,8 +50,7 @@ const notifications = async function([event, calendar = "primary"], context) {
   }
 }
 
-
-const setNotifications = async function ([event, calendar = "primary", ...varargs], context) {
+const setNotifications = async function ([event, calendar = "primary", ...varargs], context: coda.ExecutionContext) {
   const reminders = [];
   for (let i = 0; i < varargs.length; i += 2) {
     reminders.push({
@@ -75,7 +74,7 @@ const setNotifications = async function ([event, calendar = "primary", ...vararg
   });
 
   try {
-    const eventResponse = await updateEventReminders(event, calendar, { useDefault: false, overrides: reminders, })(context);
+    const eventResponse = await updateEventReminders(event, calendar, { useDefault: false, overrides: reminders, })(context.fetcher);
     return eventResponse.body.htmlLink;
   } catch (error) {
     console.log(error);
@@ -92,9 +91,9 @@ const setNotifications = async function ([event, calendar = "primary", ...vararg
   }
 }
 
-const clearNotifications = async function([event, calendar = "primary", restoreDefault = false], context) {
+const clearNotifications = async function([event, calendar = "primary", restoreDefault = false], context: coda.ExecutionContext) {
   try {
-    const eventResponse = await updateEventReminders(event, calendar, { useDefault: restoreDefault, overrides: [], })(context);
+    const eventResponse = await updateEventReminders(event, calendar, { useDefault: restoreDefault, overrides: [], })(context.fetcher);
     return eventResponse.body.htmlLink;
   } catch (error) {
     console.log(error);
