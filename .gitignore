@@ -4,3 +4,5 @@
 # Coda
 .coda.json
 .coda-credentials.json
+
+.DS_Store
