@@ -4,7 +4,8 @@
   "description": "A Coda pack to set and check notifications of Google Calendar events.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "upload": "coda upload pack.ts"
   },
   "repository": {
     "type": "git",
